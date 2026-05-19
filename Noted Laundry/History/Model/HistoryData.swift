@@ -1,21 +1,19 @@
 import Foundation
+import SwiftData
 
-struct MonthlyHistory: Identifiable, Codable {
-    var id = UUID()
-    let monthName: String
-    let items: [HistoryData]
+@Model
+
+final class HistoryData {
+    @Attribute(.unique) var id: UUID
+    var date: String
+    var totalCounts: Int
     
-    static let groupedDummy = [
-        MonthlyHistory(monthName: "April", items: [
-            HistoryData(id: 1, date: "16 April 2026", totalCounts: 15),
-            HistoryData(id: 2, date: "17 April 2026", totalCounts: 11)
-        ])
-    ]
+    var monthlyHistory: MonthlyHistory?
+    
+    init(id: UUID, date: String, totalCounts: Int, monthlyHistory: MonthlyHistory? = nil) {
+        self.id = id
+        self.date = date
+        self.totalCounts = totalCounts
+        self.monthlyHistory = monthlyHistory
+    }
 }
-
-struct HistoryData: Identifiable, Codable {
-    let id: Int
-    let date: String
-    let totalCounts: Int
-}
-

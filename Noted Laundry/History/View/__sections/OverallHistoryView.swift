@@ -6,13 +6,14 @@ struct OverallHistoryView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
+                
                 ForEach(historyData) { monthGroup in
                     Group {
                         let items = monthGroup.items
                         Text(monthGroup.monthName)
                             .font(.title2.bold())
                             .padding(.horizontal)
-
+                        
                         ZStack(alignment: .top) {
                             ForEach(Array(items.enumerated()), id: \.element.id) { index, data in
                                 RandomHistoryCard(data: data, index: index, totalCount: items.count)
@@ -22,8 +23,14 @@ struct OverallHistoryView: View {
                     }
                 }
             }
-            .padding(.horizontal)
-            .padding(.top, 20)
+            
         }
+        .padding(.horizontal)
+        .padding(.top, 20)
     }
+}
+
+
+#Preview {
+    OverallHistoryView(historyData: [])
 }

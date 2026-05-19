@@ -8,7 +8,7 @@ final class CurrentProgress {
     @Relationship(deleteRule: .cascade, inverse: \LaundryItem.progress)
     var items: [LaundryItem] = []
     
-    init(countdown: String, currentCount: Int, maxCount: Int, items: [LaundryItem]) {
+    init(countdown: String, items: [LaundryItem]) {
         self.countdown = countdown
         self.items = items
     }

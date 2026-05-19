@@ -1,18 +1,43 @@
 import SwiftUI
+import SwiftData
 
 struct HistoryView: View {
-    let historyData: [MonthlyHistory]
+    @Query private var  historyData: [MonthlyHistory]
     var body: some View{
-        NavigationView{
+        NavigationStack{
             ZStack{
                 AppBackground()
-                ScrollView{
-                    VStack{
-                        OverallHistoryView(historyData: historyData)
+                if historyData.isEmpty {
+                    ContentUnavailableView {
+                        Label("No History Available", systemImage: "clock.badge.exclamationmark")
+                    } description: {
+                        Text("Your completed laundry sessions will appear here once they are finished.")
+                            .font(.subheadline)
+                    } actions: {
+                        // Tombol pemanis atau bisa diarahkan untuk kembali ke Home jika mau
+                        NavigationLink(destination: {
+                            AddLaundryView()
+                        }, label: {
+                            Text("Start Laundry Now")
+                                .font(.headline)
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 24)
+                                .padding(.vertical, 12)
+                                .background(Color("BubbleCoral")) // Menggunakan Accent Color-mu
+                                .clipShape(Capsule())
+                        })
+                        .padding(.top, 10)
+                    }
+                    // Memberikan efek transisi halus saat data beralih dari kosong ke ada
+                    .transition(.opacity.combined(with: .scale))
+                } else {
+                    ScrollView{
+                        VStack{
+                            OverallHistoryView(historyData: historyData)
+                        }
                     }
                 }
-                .navigationTitle("History")
-                .toolbarTitleDisplayMode(.inlineLarge)
+                
 //                .toolbar{
 //                    ToolbarItemGroup(placement: .navigationBarTrailing) {
 //                        Menu {
@@ -53,11 +78,8 @@ struct HistoryView: View {
 //                }
                 
             }
+            .navigationTitle("History")
+            .toolbarTitleDisplayMode(.inlineLarge)
         }
     }
-}
-
-
-#Preview {
-    HistoryView(historyData: MonthlyHistory.groupedDummy)
 }

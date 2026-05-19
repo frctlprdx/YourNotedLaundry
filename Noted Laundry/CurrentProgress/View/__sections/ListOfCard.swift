@@ -19,7 +19,7 @@ struct ListOfCard: View {
                     NavigationLink {
                         AddLaundryView()
                     } label: {
-                        Text("Add Laundry Now")
+                        Text("Start Laundry Now")
                             .font(.headline)
                             .foregroundStyle(.white)
                             .padding(.horizontal, 24)

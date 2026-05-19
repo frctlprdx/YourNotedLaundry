@@ -9,9 +9,7 @@ import SwiftUI
 import SwiftData
 
 @main
-struct YourLaundryTrackerApp: App {
-    let historyData: [MonthlyHistory] = MonthlyHistory.groupedDummy
-
+struct YourLaundryTrackerApp: App{
     var body: some Scene {
         WindowGroup {
             TabView{
@@ -19,12 +17,16 @@ struct YourLaundryTrackerApp: App {
                     CurrentProgressView()
                 }
                 Tab("History", systemImage: "clock.fill") {
-                    HistoryView(historyData: historyData)
+                    HistoryView()
                 }
             }
         }
-        .modelContainer(for: [CurrentProgress.self, LaundryItem.self])
+        .modelContainer(for:[
+            CurrentProgress.self,
+            LaundryItem.self,
+            MonthlyHistory.self,
+            HistoryData.self
+        ])
     }
 }
-
 
